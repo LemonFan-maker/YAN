@@ -22,7 +22,7 @@ class AppMainWindow(QMainWindow, CodeX_UI.Ui_mainWindow):
 
     def load_mdeditor(self):
         """ 加载CodeX编辑器 """
-        url = os.getcwd() + '\\' + 'cour\\CodeX\\utils\\index.html'
+        url = os.getcwd() + '\\' + 'core\\CodeX\\utils\\index.html'
         self.VSCode.load(QUrl.fromLocalFile(url))
 
 # if __name__=="__main__":
