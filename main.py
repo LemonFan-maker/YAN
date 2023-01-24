@@ -27,26 +27,6 @@ class Ui_MainWindow(QMainWindow):
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.gridLayout = QtWidgets.QGridLayout()
-        self.gridLayout.setObjectName("gridLayout")
-        self.listView = QtWidgets.QListView(self.centralwidget)
-        self.listView.setObjectName("listView")
-        self.gridLayout.addWidget(self.listView, 0, 0, 1, 1, QtCore.Qt.AlignLeft)
-        self.tableView = QtWidgets.QTableView(self.centralwidget)
-        self.tableView.setObjectName("tableView")
-        self.gridLayout.addWidget(self.tableView, 1, 0, 1, 1, QtCore.Qt.AlignLeft|QtCore.Qt.AlignBottom)
-        self.horizontalLayout.addLayout(self.gridLayout)
-        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
-        self.textEdit.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        font = QtGui.QFont()
-        font.setFamily("新宋体")
-        font.setPointSize(16)
-        self.textEdit.setFont(font)
-        self.textEdit.setStyleSheet("QTextEdit{\n"
-"border-radius: 12px;\n"
-"}")
-        self.textEdit.setObjectName("textEdit")
-        self.horizontalLayout.addWidget(self.textEdit)
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
         self.scrollArea.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.scrollArea.setWidgetResizable(True)
@@ -90,29 +70,42 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_Update.setObjectName("pushButton_Update")
         self.verticalLayout.addWidget(self.pushButton_Update)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-        self.horizontalLayout.addWidget(self.scrollArea, 0, QtCore.Qt.AlignHCenter)
+        self.horizontalLayout.addWidget(self.scrollArea, 0, QtCore.Qt.AlignLeft)
+        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("新宋体")
+        font.setPointSize(16)
+        self.textEdit.setFont(font)
+        self.textEdit.setStyleSheet("QTextEdit{\n"
+"border-radius: 18px;\n"
+"}")
+        self.textEdit.setObjectName("textEdit")
+        self.horizontalLayout.addWidget(self.textEdit)
+        self.gridLayout = QtWidgets.QGridLayout()
+        self.gridLayout.setObjectName("gridLayout")
+        self.tableView = QtWidgets.QTableView(self.centralwidget)
+        self.tableView.setObjectName("tableView")
+        self.gridLayout.addWidget(self.tableView, 1, 1, 1, 1, QtCore.Qt.AlignLeft|QtCore.Qt.AlignBottom)
+        self.listView = QtWidgets.QListView(self.centralwidget)
+        self.listView.setObjectName("listView")
+        self.gridLayout.addWidget(self.listView, 0, 1, 1, 1, QtCore.Qt.AlignRight)
+        self.horizontalLayout.addLayout(self.gridLayout)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusBar = QtWidgets.QStatusBar(MainWindow)
         self.statusBar.setObjectName("statusBar")
         MainWindow.setStatusBar(self.statusBar)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
+        
         # 绑定事件槽
         self.pushButton_VSCode.clicked.connect(self.CodeX)
         # self.pushButton_save.clicked.connect(self.button_save)
         self.pushButton_markdown.clicked.connect(self.MD)
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "无 · 言"))
-        self.textEdit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:\'新宋体\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:18pt;\"><br /></p></body></html>"))
         self.pushButton_new.setText(_translate("MainWindow", "新建项目"))
         self.pushButton_open.setText(_translate("MainWindow", "打开项目"))
         self.pushButton_save.setText(_translate("MainWindow", "保存项目"))
@@ -124,6 +117,14 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_QT.setText(_translate("MainWindow", "关于Qt5"))
         self.pushButton_Issue.setText(_translate("MainWindow", "报告错误"))
         self.pushButton_Update.setText(_translate("MainWindow", "检查新版本"))
+        self.textEdit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:\'新宋体\'; font-size:18pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:18pt;\"><br /></p></body></html>"))
 
     def CodeX(self):
         data = ' ' + os.getcwd() + '\\' + 'core\\CodeX\\main_codeX.py'

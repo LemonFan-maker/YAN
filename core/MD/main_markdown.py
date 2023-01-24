@@ -65,7 +65,7 @@ class AppMainWindow(QMainWindow, Ui_MainWindow):
 
     def load_mdeditor(self):
         """ 加载Markdown编辑器 """
-        url = os.getcwd() + '\\' + 'cour\\MD\\mdeditor\\index.html'
+        url = os.getcwd() + '\\' + 'core\\MD\\mdeditor\\index.html'
         self.mdEditorWbrowser.load(QUrl.fromLocalFile(url))
 
 if __name__ == '__main__':
