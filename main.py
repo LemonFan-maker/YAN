@@ -1,5 +1,5 @@
-#from cour.CodeX import main_codex
-#from cour.MD import MD_UI
+#from core.CodeX import main_codex
+#from core.MD import MD_UI
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QApplication, QMainWindow
@@ -126,11 +126,11 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_Update.setText(_translate("MainWindow", "检查新版本"))
 
     def CodeX(self):
-        data = ' ' + os.getcwd() + '\\' + 'cour\\CodeX\\main_codeX.py'
+        data = ' ' + os.getcwd() + '\\' + 'core\\CodeX\\main_codeX.py'
         os.system(r'python'+data)  
     
     def MD(self):
-        data = ' ' + os.getcwd() + '\\' + 'cour\\MD\\main_markdown.py'
+        data = ' ' + os.getcwd() + '\\' + 'core\\MD\\main_markdown.py'
         os.system(r'python'+data)
 if __name__ == "__main__":
     import sys
