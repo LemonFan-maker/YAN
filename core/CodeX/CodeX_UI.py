@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\codeX.ui'
+# Form implementation generated from reading ui file '.\pyqt_note_ui - 副本.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -21,6 +21,51 @@ class Ui_mainWindow(object):
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName("gridLayout")
+        self.widget_6 = QtWidgets.QWidget(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget_6.sizePolicy().hasHeightForWidth())
+        self.widget_6.setSizePolicy(sizePolicy)
+        self.widget_6.setObjectName("widget_6")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.widget_6)
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_3.setSpacing(0)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.widget_3 = QtWidgets.QWidget(self.widget_6)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget_3.sizePolicy().hasHeightForWidth())
+        self.widget_3.setSizePolicy(sizePolicy)
+        self.widget_3.setMinimumSize(QtCore.QSize(150, 0))
+        self.widget_3.setMaximumSize(QtCore.QSize(155, 16777215))
+        self.widget_3.setObjectName("widget_3")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.widget_3)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.widget_2 = QtWidgets.QWidget(self.widget_3)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget_2.sizePolicy().hasHeightForWidth())
+        self.widget_2.setSizePolicy(sizePolicy)
+        self.widget_2.setObjectName("widget_2")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget_2)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.btnSetting = QtWidgets.QPushButton(self.widget_2)
+        self.btnSetting.setObjectName("btnSetting")
+        self.verticalLayout.addWidget(self.btnSetting)
+        self.btnSyncToCloud = QtWidgets.QPushButton(self.widget_2)
+        self.btnSyncToCloud.setObjectName("btnSyncToCloud")
+        self.verticalLayout.addWidget(self.btnSyncToCloud)
+        self.btnSyncToLocal = QtWidgets.QPushButton(self.widget_2)
+        self.btnSyncToLocal.setObjectName("btnSyncToLocal")
+        self.verticalLayout.addWidget(self.btnSyncToLocal)
+        self.verticalLayout_2.addWidget(self.widget_2)
+        self.horizontalLayout_3.addWidget(self.widget_3)
+        self.gridLayout.addWidget(self.widget_6, 0, 0, 1, 1)
         self.VSCode = QtWebEngineWidgets.QWebEngineView(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -28,7 +73,9 @@ class Ui_mainWindow(object):
         sizePolicy.setHeightForWidth(self.VSCode.sizePolicy().hasHeightForWidth())
         self.VSCode.setSizePolicy(sizePolicy)
         self.VSCode.setObjectName("VSCode")
-        self.gridLayout.addWidget(self.VSCode, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.VSCode, 0, 2, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(5, 765, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 0, 1, 1, 1)
         mainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(mainWindow)
@@ -37,4 +84,7 @@ class Ui_mainWindow(object):
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
         mainWindow.setWindowTitle(_translate("mainWindow", "PyQtNote"))
+        self.btnSetting.setText(_translate("mainWindow", "打开文件"))
+        self.btnSyncToCloud.setText(_translate("mainWindow", "保存文件"))
+        self.btnSyncToLocal.setText(_translate("mainWindow", "退出"))
 from PyQt5 import QtWebEngineWidgets
