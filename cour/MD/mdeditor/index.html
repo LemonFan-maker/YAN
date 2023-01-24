@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>editor</title>
+
+    <link rel="stylesheet" href="editormd/css/editormd.css">
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+        .main {
+            height: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .md-title {
+            width: 99%;
+            height: 28px;
+            border: 1px none #673ab7;
+            border-bottom-style: solid;
+            margin: 2px 0;
+        }
+
+        #md-editor {
+            margin: 0 auto !important;
+            border: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <input type="text" id="md-title" class="md-title" placeholder="请输入标题...">
+        <div id="md-editor">
+            <textarea style="display:none;"></textarea>
+        </div>
+    </div>
+
+
+
+    <script src="editormd/jquery-3.5.1.min.js"></script>
+    <script src="editormd/editormd.js"></script>
+
+    <script src='qrc:///qtwebchannel/qwebchannel.js'></script>
+
+    <script>
+        var mdEditor;
+        var pythonBridge;
+
+        $(function () {
+            initMdEditor();
+
+            new QWebChannel(qt.webChannelTransport, function (channel) {
+                pythonBridge = channel.objects.pythonBridge;
+            });
+        });
+           
+
+        // 初始化Markdown编辑器
+        function initMdEditor(mdContent = "") {
+            mdEditor = editormd("md-editor", {
+                placeholder: "请输入...",
+                // width: "99%",
+                height: "100%",
+                markdown: mdContent,   //清空
+                path: "editormd/lib/",
+                emoji: true,
+                saveHTMLToTextarea: true,   // 保存 HTML 到 Textarea
+                tocm: true, // 支持 [TOCM]
+                tex: true,  // 开启科学公式TeX语言支持，默认关闭
+                flowChart: true,    // 开启流程图支持，默认关闭
+                sequenceDiagram: true,  // 开启时序/序列图支持，默认关闭
+
+                onload: function () {
+                    var saveKeyMap = {
+                        "Ctrl-S": function (cm) {
+                            // alert("Ctrl+S");
+                            var note = {
+                                title: getMdTitle(),
+                                content: mdEditor.getMarkdown()
+                            }
+
+                            // 保存笔记
+                            pythonBridge.save_note(note);
+                        }
+                    };
+
+                    this.addKeyMap(saveKeyMap);
+                }
+            });
+        }
+
+        // 获取笔记标题
+        function getMdTitle() {
+            return document.getElementById('md-title').value;
+        }
+
+        // 获取Markdown文本
+        function getMarkdown() {
+            return mdEditor.getMarkdown();
+        }
+
+        // 获取HTML文本
+        function getMarkdown() {
+            return mdEditor.getHTML();
+        }
+
+        // 设置Markdown文本
+        // function setMarkdown(mdContent) {
+        //     initMdEditor(mdContent);
+        // }
+
+        // 设置Markdown文本
+        function setMarkdown(mdContent) {
+            mdEditor.setMarkdown(mdContent);
+        }
+
+        // 设置标题和Markdown文本（接收字符串参数）
+        // function setTitleAndMarkdown(title, mdContent) {
+        //     document.getElementById('md-title').value = title;
+        //     mdEditor.setMarkdown(mdContent);
+        // }
+
+        // 设置标题和Markdown文（接收对象参数）
+        function setTitleAndMarkdown(data) {
+            // alert(data.note_name)
+            // alert(data.note_content)
+            document.getElementById('md-title').value = data.note_name;
+            mdEditor.setMarkdown(data.note_content);
+        }
+
+        
+    </script>
+</body>
+
+</html>
