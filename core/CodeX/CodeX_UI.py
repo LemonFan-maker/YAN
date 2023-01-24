@@ -83,7 +83,7 @@ class Ui_mainWindow(object):
 
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
-        mainWindow.setWindowTitle(_translate("mainWindow", "PyQtNote"))
+        mainWindow.setWindowTitle(_translate("mainWindow", "CodeX"))
         self.btnSetting.setText(_translate("mainWindow", "打开文件"))
         self.btnSyncToCloud.setText(_translate("mainWindow", "保存文件"))
         self.btnSyncToLocal.setText(_translate("mainWindow", "退出"))
