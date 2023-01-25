@@ -1,8 +1,3 @@
-import os, sys
-from PyQt5 import QtCore
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QFileDialog, QMessageBox
-
 def save_event(self):
     save_path = r"./apc.txt"
     print(save_path)

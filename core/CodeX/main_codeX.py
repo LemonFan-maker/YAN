@@ -37,7 +37,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     # 初始化
     appMainWin = AppMainWindow()
-    apply_stylesheet(app, theme='dark_teal.xml')
+    apply_stylesheet(app, theme='dark_cyan.xml')
     # 将窗口控件显示在屏幕上
     appMainWin.show()
     # 程序运行，sys.exit方法确保程序完整退出。

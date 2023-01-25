@@ -16,6 +16,7 @@ class Ui_MainWindow(object):
         mainWindow.setObjectName("mainWindow")
         mainWindow.resize(1366, 768)
         self.centralwidget = QtWidgets.QWidget(mainWindow)
+        mainWindow.setWindowOpacity(0.90)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)

@@ -1,6 +1,6 @@
 #from core.CodeX import main_codex
 #from core.MD import MD_UI
-
+from core.textsave import save_event
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QApplication, QMainWindow
 from qt_material import apply_stylesheet
@@ -22,7 +22,7 @@ class Ui_MainWindow(QMainWindow):
         MainWindow.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         icon = QtGui.QIcon.fromTheme("accessories-calculator")
         MainWindow.setWindowIcon(icon)
-        MainWindow.setWindowOpacity(0.95)
+        MainWindow.setWindowOpacity(0.90)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
@@ -100,7 +100,7 @@ class Ui_MainWindow(QMainWindow):
         
         # 绑定事件槽
         self.pushButton_VSCode.clicked.connect(self.CodeX)
-        # self.pushButton_save.clicked.connect(self.button_save)
+        self.pushButton_save.clicked.connect(self.button_save)
         self.pushButton_markdown.clicked.connect(self.MD)
 
     def retranslateUi(self, MainWindow):
@@ -133,6 +133,12 @@ class Ui_MainWindow(QMainWindow):
     def MD(self):
         data = ' ' + os.getcwd() + '\\' + 'core\\MD\\main_markdown.py'
         os.system(r'python'+data)
+    
+    def button_save(self):
+        save_event(self)
+    
+        
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
