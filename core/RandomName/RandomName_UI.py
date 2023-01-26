@@ -106,9 +106,6 @@ class Ui_MainWindow(object):
         girl_lastname = list(data['girl_lastname'].replace(",", ""))
         girl_firstname = list(data['girl_firstname'].replace(",", ""))
         girl = list(data['girl_name'].replace(",", ""))    
-        # 由于firstname多个，随机删除
-        #element = random.choice(girl_firstname)
-        #girl_firstname.remove(element)
         
         #random.shuffle(girl_lastname)
         #random.shuffle(girl_firstname)
