@@ -1,6 +1,8 @@
 <h1 align="center">无 · 言
-<h3 align="left">一个轻便的编辑器
-<h5 align="left"> TODO List
+
+### 一个轻便的编辑器，采用[PyQt5](https://www.qt.io/)制作，内部集成[editor.md](https://github.com/pandao/editor.md)和[monaco Editor](https://github.com/microsoft/monaco-editor)
+
+##### TODO List
 
 - [x] 随机名称
   
