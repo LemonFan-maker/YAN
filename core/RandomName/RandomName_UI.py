@@ -94,15 +94,13 @@ class Ui_MainWindow(object):
         with open(fantasy_name_dir,'r',encoding='utf-8')as fantasy_name:
             data = fantasy_name.read()
             data = urllib.parse.unquote(data)
-            temp_file = tempfile.mkstemp()
-            f = open(temp_file[1], 'w', encoding="utf-8")
-            f.write(data)
-            f.close()
+            temp_file = tempfile.TemporaryFile('w',encoding='utf-8',delete=False)
+            #f = open(temp_file.name, 'w', encoding="utf-8")
+            temp_file.write(data)
 
-        with open(temp_file[1],'r',encoding='utf-8') as json_data:
+        with open(temp_file.name,'r',encoding='utf-8') as json_data:
             json_data = json_data.read()
             data = json.loads(json_data, strict=False)
-
         girl_lastname = list(data['girl_lastname'].replace(",", ""))
         girl_firstname = list(data['girl_firstname'].replace(",", ""))
         girl = list(data['girl_name'].replace(",", ""))    
@@ -119,4 +117,6 @@ class Ui_MainWindow(object):
         name = random.choice(result)
         name = "".join (name)
         selected_str = random.choice([name, name_random])
+        temp_file.close()
+        os.remove(temp_file.name)
         return selected_str
