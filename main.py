@@ -100,6 +100,7 @@ class Ui_MainWindow(QMainWindow):
         
         # 绑定事件槽
         self.pushButton_VSCode.clicked.connect(self.CodeX)
+        self.pushButton_random.clicked.connect(self.RandomName)
         self.pushButton_save.clicked.connect(self.button_save)
         self.pushButton_markdown.clicked.connect(self.MD)
 
@@ -136,6 +137,10 @@ class Ui_MainWindow(QMainWindow):
     
     def button_save(self):
         save_event(self)
+    
+    def RandomName(self):
+        data = ' ' + os.getcwd() + '\\' + 'core\\RandomName\\main_RandomName.py'
+        os.system(r'python'+data)
     
         
 
