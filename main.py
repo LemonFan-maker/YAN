@@ -4,8 +4,9 @@ from core.textsave import save_event
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QApplication, QMainWindow, QSplashScreen
 from qt_material import apply_stylesheet
-import sys, os, time
+import sys, os, time, ctypes
 
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("996")
 class Ui_MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()

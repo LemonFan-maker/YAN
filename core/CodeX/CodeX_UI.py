@@ -9,13 +9,17 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import ctypes
 
-
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("996")
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
         mainWindow.setObjectName("mainWindow")
         mainWindow.resize(1366, 768)
         mainWindow.setWindowOpacity(0.90)
+        icon = QtGui.QIcon.fromTheme("accessories-calculator")
+        mainWindow.setWindowIcon(icon)
+        mainWindow.setWindowIcon(QtGui.QIcon("./assets/logo.png"))
         self.centralwidget = QtWidgets.QWidget(mainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
