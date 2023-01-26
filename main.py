@@ -78,7 +78,7 @@ class Ui_MainWindow(QMainWindow):
         font.setPointSize(16)
         self.textEdit.setFont(font)
         self.textEdit.setStyleSheet("QTextEdit{\n"
-"border-radius: 18px;\n"
+"border-radius: 22px;\n"
 "}")
         self.textEdit.setObjectName("textEdit")
         self.horizontalLayout.addWidget(self.textEdit)
