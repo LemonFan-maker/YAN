@@ -14,7 +14,6 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(830, 610)
-        MainWindow.setWindowOpacity(0.90)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -25,14 +24,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
-        self.pushButton = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.pushButton.setObjectName("pushButton")
-        self.gridLayout.addWidget(self.pushButton, 4, 0, 1, 2)
         self.comboBox_2 = QtWidgets.QComboBox(self.horizontalLayoutWidget)
         self.comboBox_2.setObjectName("comboBox_2")
         self.comboBox_2.addItem("")
-        self.gridLayout.addWidget(self.comboBox_2, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.comboBox_2, 1, 2, 1, 1)
         self.label_2 = QtWidgets.QLabel(self.horizontalLayoutWidget)
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
@@ -41,32 +36,44 @@ class Ui_MainWindow(object):
         self.spinBox.setMaximum(999)
         self.spinBox.valueChanged.connect(self.changeValue) 
         self.spinBox.setObjectName("spinBox")
-        self.gridLayout.addWidget(self.spinBox, 3, 1, 1, 1)
+        self.gridLayout.addWidget(self.spinBox, 3, 2, 1, 1)
         self.label_3 = QtWidgets.QLabel(self.horizontalLayoutWidget)
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.gridLayout.addWidget(self.label_3, 1, 0, 1, 1)
+        self.pushButton_2 = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.gridLayout.addWidget(self.pushButton_2, 6, 0, 1, 1)
+        self.pushButton = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.pushButton.setObjectName("pushButton")
+        self.gridLayout.addWidget(self.pushButton, 6, 2, 1, 1)
         self.textBrowser = QtWidgets.QTextBrowser(self.horizontalLayoutWidget)
         self.textBrowser.setStyleSheet("QTextBrowser{\n"
 "    font-size: 18px;\n"
 "    }")
         self.textBrowser.setObjectName("textBrowser")
-        self.gridLayout.addWidget(self.textBrowser, 2, 1, 1, 1)
+        self.gridLayout.addWidget(self.textBrowser, 2, 2, 1, 1)
         self.horizontalLayout.addLayout(self.gridLayout)
         MainWindow.setCentralWidget(self.centralwidget)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
+        
+        self.pushButton_2.clicked.connect(self.clean)
         self.pushButton.clicked.connect(self.clickButton)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton.setText(_translate("MainWindow", "生成"))
         self.comboBox_2.setItemText(0, _translate("MainWindow", "玄幻"))
         self.label_2.setText(_translate("MainWindow", "数量"))
         self.label_3.setText(_translate("MainWindow", "类型"))
+        self.pushButton_2.setText(_translate("MainWindow", "清空"))
+        self.pushButton.setText(_translate("MainWindow", "生成"))
     
+    def clean(self):
+        self.textBrowser.clear()
+
     def get_type(self):
         name_type = self.comboBox_2.currentText()
         return name_type
@@ -79,6 +86,7 @@ class Ui_MainWindow(object):
         types= self.get_type()
         #normal_lastname, double_lastname, boy_firstname, girl_firstname = self.normal_read_json()
         if types == "玄幻": 
+            self.textBrowser.append("——————————")
             for i in range(self.changeValue()):
                 self.textBrowser.append(self.fantasy_read_json())
             self.textBrowser.append("——————————")
