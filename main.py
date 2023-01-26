@@ -2,10 +2,9 @@
 #from core.MD import MD_UI
 from core.textsave import save_event
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QFileDialog, QMessageBox, QApplication, QMainWindow
+from PyQt5.QtWidgets import QFileDialog, QMessageBox, QApplication, QMainWindow, QSplashScreen
 from qt_material import apply_stylesheet
-
-import sys, os, pathlib, json
+import sys, os, time
 
 class Ui_MainWindow(QMainWindow):
     def __init__(self):
@@ -22,6 +21,7 @@ class Ui_MainWindow(QMainWindow):
         MainWindow.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         icon = QtGui.QIcon.fromTheme("accessories-calculator")
         MainWindow.setWindowIcon(icon)
+        MainWindow.setWindowIcon(QtGui.QIcon("./assets/logo.png"))
         MainWindow.setWindowOpacity(0.90)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -141,14 +141,24 @@ class Ui_MainWindow(QMainWindow):
     def RandomName(self):
         data = ' ' + os.getcwd() + '\\' + 'core\\RandomName\\main_RandomName.py'
         os.system(r'python'+data)
-    
+class MySplashScreen(QSplashScreen):
+    pass
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
+    splash = MySplashScreen()
+    pixmap = QtGui.QPixmap('./assets/loading.png')
+    splash.show()
+    pixmap = pixmap.scaledToWidth(800)
+    splash.setPixmap(pixmap)
+    splash.showMessage("加载... 0%", QtCore.Qt.AlignHCenter | QtCore.Qt.AlignBottom, QtCore.Qt.white)
+    splash.setFont(QtGui.QFont('微软雅黑', 18))
+    time.sleep(3)
     MainWindow = QtWidgets.QMainWindow()
     apply_stylesheet(app ,theme='dark_cyan.xml')
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
+    splash.finish(ui)
     MainWindow.show()
     sys.exit(app.exec_())
