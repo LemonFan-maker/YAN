@@ -142,7 +142,6 @@ class Ui_MainWindow(QMainWindow):
         data = ' ' + os.getcwd() + '\\' + 'core\\RandomName\\main_RandomName.py'
         os.system(r'python'+data)
     
-        
 
 if __name__ == "__main__":
     import sys
