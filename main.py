@@ -1,9 +1,7 @@
-#from core.CodeX import main_codex
-#from core.MD import MD_UI
-from core.textsave import save_event
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QApplication, QMainWindow, QSplashScreen
 from qt_material import apply_stylesheet
+from pyqt5Custom.toast import Toast
 import sys, os, time, ctypes
 
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("996")
@@ -100,9 +98,10 @@ class Ui_MainWindow(QMainWindow):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         
         # 绑定事件槽
+        self.pushButton_open.clicked.connect(self.Open)
         self.pushButton_VSCode.clicked.connect(self.CodeX)
         self.pushButton_random.clicked.connect(self.RandomName)
-        self.pushButton_save.clicked.connect(self.button_save)
+        self.pushButton_save.clicked.connect(self.Save)
         self.pushButton_markdown.clicked.connect(self.MD)
 
     def retranslateUi(self, MainWindow):
@@ -127,6 +126,27 @@ class Ui_MainWindow(QMainWindow):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:\'新宋体\'; font-size:18pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:18pt;\"><br /></p></body></html>"))
+    
+    def Save(self):
+        self.fname, ftype = QFileDialog.getSaveFileName(self, 'save file', './', "ALL (*.*)")
+        print(self.fname)
+        if self.fname:
+            data = self.textEdit.toPlainText()
+            if os.path.exists(self.fname):
+                pass
+                #Toast(self, text="文件已存在")
+            else:    
+                with open(self.fname, 'w', encoding="utf-8") as fn:
+                    fn.write(data)
+                    fn.close()
+
+    def Open(self):
+        self.file,fileType = QFileDialog.getOpenFileName(self, 'open file', './', "ALL (*.*)")
+        if self.file:
+            with open(self.file, 'r', encoding='utf-8') as f:
+                data = f.read()
+                self.textEdit.append(data)
+
 
     def CodeX(self):
         data = ' ' + os.getcwd() + '\\' + 'core\\CodeX\\main_codeX.py'
@@ -135,9 +155,6 @@ class Ui_MainWindow(QMainWindow):
     def MD(self):
         data = ' ' + os.getcwd() + '\\' + 'core\\MD\\main_markdown.py'
         os.system(r'python'+data)
-    
-    def button_save(self):
-        save_event(self)
     
     def RandomName(self):
         data = ' ' + os.getcwd() + '\\' + 'core\\RandomName\\main_RandomName.py'
