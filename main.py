@@ -48,6 +48,9 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_random.setObjectName("pushButton_random")
         self.verticalLayout.addWidget(self.pushButton_random)
         self.pushButton_markdown = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton_Analy = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton_Analy.setObjectName("pushButton_Analy")
+        self.verticalLayout.addWidget(self.pushButton_Analy)
         self.pushButton_markdown.setObjectName("pushButton_markdown")
         self.verticalLayout.addWidget(self.pushButton_markdown)
         self.pushButton_VSCode = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
@@ -111,6 +114,7 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_open.setText(_translate("MainWindow", "打开项目"))
         self.pushButton_save.setText(_translate("MainWindow", "保存项目"))
         self.pushButton_random.setText(_translate("MainWindow", "随机生成"))
+        self.pushButton_Analy.setText(_translate("MainWindow", "统计信息"))
         self.pushButton_markdown.setText(_translate("MainWindow", "MD编辑器"))
         self.pushButton_VSCode.setText(_translate("MainWindow", "代码编辑器"))
         self.pushButton_settings.setText(_translate("MainWindow", "设置"))
@@ -126,7 +130,19 @@ class Ui_MainWindow(QMainWindow):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:\'新宋体\'; font-size:18pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:18pt;\"><br /></p></body></html>"))
-    
+
+    # def get_time(self):
+    #     if self.start_time == 0 and len(self.textEdit.toPlainText()) == 1:
+    #         self.start_time = time.time()
+    #         print("开始咯")
+
+    # def total(self):
+    #     total_time = round(time.time() - self.start_time)
+    #     total_word = len(self.textEdit.toPlainText())
+    #     ave = round(total_word/total_time*60)
+    #     print(ave)
+
+
     def Save(self):
         self.fname, ftype = QFileDialog.getSaveFileName(self, 'save file', './', "ALL (*.*)")
         print(self.fname)
@@ -147,7 +163,6 @@ class Ui_MainWindow(QMainWindow):
                 data = f.read()
                 self.textEdit.append(data)
 
-
     def CodeX(self):
         data = ' ' + os.getcwd() + '\\' + 'core\\CodeX\\main_codeX.py'
         os.system(r'python'+data)  
@@ -165,6 +180,7 @@ class MySplashScreen(QSplashScreen):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
+    
     splash = MySplashScreen()
     pixmap = QtGui.QPixmap('./assets/loading.png')
     splash.show()
@@ -174,10 +190,13 @@ if __name__ == "__main__":
     splash.showMessage("欢迎!", QtCore.Qt.AlignHCenter | QtCore.Qt.AlignBottom, QtCore.Qt.white)
     splash.setFont(font)
     time.sleep(3)
+
     MainWindow = QtWidgets.QMainWindow()
     apply_stylesheet(app ,theme='dark_cyan.xml')
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
+    
     splash.finish(ui)
+    
     MainWindow.show()
     sys.exit(app.exec_())
