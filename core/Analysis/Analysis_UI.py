@@ -97,7 +97,6 @@ class Ui_MainWindow(QMainWindow):
     
     def Clear(self):
         self.textBrowser.clear()
-        os.remove()
 
 
     def Open(self):
