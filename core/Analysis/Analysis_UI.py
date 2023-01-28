@@ -10,7 +10,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QCoreApplication, pyqtSignal
 from PyQt5.QtWidgets import QWidget, QFileDialog, QPushButton, QGridLayout, QApplication, QMainWindow, QFormLayout, QLineEdit
 from qt_material import apply_stylesheet
-import jieba
 from wordcloud import WordCloud
 import tempfile, os, shutil
 from wordcloud import ImageColorGenerator
@@ -51,21 +50,21 @@ class Ui_MainWindow(QMainWindow):
         self.gridLayout_2.addLayout(self.verticalLayout, 1, 1, 1, 1)
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
-        self.pushButton_View = QtWidgets.QPushButton(self.WordCloud)
-        self.pushButton_View.setObjectName("pushButton_View")
-        self.gridLayout.addWidget(self.pushButton_View, 2, 0, 1, 1)
         self.pushButton_Open = QtWidgets.QPushButton(self.WordCloud)
         self.pushButton_Open.setObjectName("pushButton_Open")
         self.gridLayout.addWidget(self.pushButton_Open, 0, 0, 1, 1, QtCore.Qt.AlignLeft)
         self.pushButton_Save = QtWidgets.QPushButton(self.WordCloud)
         self.pushButton_Save.setObjectName("pushButton_Save")
-        self.gridLayout.addWidget(self.pushButton_Save, 3, 0, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_Save, 2, 0, 1, 1)
         self.pushButton_Exit = QtWidgets.QPushButton(self.WordCloud)
         self.pushButton_Exit.setObjectName("pushButton_Exit")
         self.gridLayout.addWidget(self.pushButton_Exit, 4, 0, 1, 1)
-        self.pushButton_Load = QtWidgets.QPushButton(self.WordCloud)
-        self.pushButton_Load.setObjectName("pushButton_Load")
-        self.gridLayout.addWidget(self.pushButton_Load, 1, 0, 1, 1, QtCore.Qt.AlignLeft)
+        self.pushButton_View = QtWidgets.QPushButton(self.WordCloud)
+        self.pushButton_View.setObjectName("pushButton_View")
+        self.gridLayout.addWidget(self.pushButton_View, 1, 0, 1, 1)
+        self.pushButton_Clear = QtWidgets.QPushButton(self.WordCloud)
+        self.pushButton_Clear.setObjectName("pushButton_Clear")
+        self.gridLayout.addWidget(self.pushButton_Clear, 3, 0, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 1, 0, 1, 1)
         self.tabWidget.addTab(self.WordCloud, "")
         self.tab_2 = QtWidgets.QWidget()
@@ -75,26 +74,31 @@ class Ui_MainWindow(QMainWindow):
         self.horizontalLayout_2.addLayout(self.horizontalLayout)
         MainWindow.setCentralWidget(self.centralwidget)
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         # 绑定事件槽
         self.pushButton_Open.clicked.connect(self.Open)
         self.pushButton_Exit.clicked.connect(QCoreApplication.instance().quit)
-        # self.pushButton_Load.clicked.connect(self.Load)
+        self.pushButton_Clear.clicked.connect(self.Load)
         self.pushButton_View.clicked.connect(self.View)
         self.pushButton_Save.clicked.connect(self.Save)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton_View.setText(_translate("MainWindow", "预览云图"))
         self.pushButton_Open.setText(_translate("MainWindow", "打开本地文件"))
         self.pushButton_Save.setText(_translate("MainWindow", "保存到本地"))
         self.pushButton_Exit.setText(_translate("MainWindow", "退出"))
-        self.pushButton_Load.setText(_translate("MainWindow", "读取当前文件"))
+        self.pushButton_View.setText(_translate("MainWindow", "预览云图"))
+        self.pushButton_Clear.setText(_translate("MainWindow", "清空"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.WordCloud), _translate("MainWindow", "词云"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Tab 2"))
+    
+    def Clear(self):
+        self.textBrowser.clear()
+        os.remove()
+
 
     def Open(self):
         self.file,fileType = QFileDialog.getOpenFileName(self, 'open file', './', "all (*.*)")
@@ -103,7 +107,7 @@ class Ui_MainWindow(QMainWindow):
                 self.textBrowser.append(f.read())
 
     def View(self):
-        bg=n.array(Image.open('core\\Analysis\\assets\\wallhaven-yj7o2l_1500x907.png')) #将图片以数组形式输出
+        bg=n.array(Image.open('core\\Analysis\\assets\\I.png')) #将图片以数组形式输出
         if self.file:
             with open(self.file, 'r', encoding='utf-8') as f:
                 data = f.read()
@@ -128,14 +132,3 @@ class Ui_MainWindow(QMainWindow):
         dirs = self.pic
         file= QFileDialog.getExistingDirectory(self, 'save file', './')
         shutil.move(dirs, file)
-        
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    apply_stylesheet(app, theme="dark_cyan.xml")
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
