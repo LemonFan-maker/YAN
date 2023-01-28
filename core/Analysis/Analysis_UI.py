@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 #
 # Created by: PyQt5 UI code generator 5.15.0
 #
@@ -17,7 +16,9 @@ import tempfile, os, shutil
 from wordcloud import ImageColorGenerator
 import numpy as n
 from PIL import Image
+import ctypes
 
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("996")
 class Ui_MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -102,7 +103,7 @@ class Ui_MainWindow(QMainWindow):
                 self.textBrowser.append(f.read())
 
     def View(self):
-        bg=n.array(Image.open('core\Analysis\wallhaven-yj7o2l_1500x907.png')) #将图片以数组形式输出
+        bg=n.array(Image.open('core\\Analysis\\assets\\wallhaven-yj7o2l_1500x907.png')) #将图片以数组形式输出
         file = self.textBrowser.toPlainText()
         cloud = wordcloud(font_path=r'assets\WordCloud.ttf',
                         mode='RGBA',
@@ -115,7 +116,7 @@ class Ui_MainWindow(QMainWindow):
         cloud.recolor(color_func=ig) #重新设置词云图颜色
         temp = tempfile.mkdtemp()
         pic = temp + "\\Cloud.png"
-        cloud.to_file(pic)    
+        cloud.to_file(pic)
     
     def Save(self):
         temp = tempfile.gettempdir()
