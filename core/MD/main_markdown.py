@@ -10,15 +10,10 @@ from MD_UI import Ui_MainWindow
 class AppMainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super(AppMainWindow, self).__init__(parent)
-        # 实例化QWebChannel
         self.channel = QWebChannel()
-        # 初始化ui
         self.setupUi(self)
-        # 设置窗口居中显示
         self.set_window_center()
-        # 初始化配置
         self.init_config()
-        # 加载Markdown编辑器
         self.load_mdeditor()
 
     def set_window_center(self):
@@ -31,7 +26,6 @@ class AppMainWindow(QMainWindow, Ui_MainWindow):
     # 初始化配置
     def init_config(self):
         """ 初始化配置文件 """
-        # 注册Bridge与js交互
         self.mdEditorWbrowser.page().setWebChannel(self.channel)
         self.channel.registerObject("pythonBridge", self)
 
@@ -42,9 +36,7 @@ class AppMainWindow(QMainWindow, Ui_MainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    # 初始化
     appMainWin = AppMainWindow()
-    # 将窗口控件显示在屏幕上
+    apply_stylesheet(app, theme="dark_cyan.xml")
     appMainWin.show()
-    # 程序运行，sys.exit方法确保程序完整退出。
     sys.exit(app.exec_())
