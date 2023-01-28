@@ -105,6 +105,7 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_VSCode.clicked.connect(self.CodeX)
         self.pushButton_random.clicked.connect(self.RandomName)
         self.pushButton_save.clicked.connect(self.Save)
+        self.pushButton_Analy.clicked.connect(self.Analy)
         self.pushButton_markdown.clicked.connect(self.MD)
 
     def retranslateUi(self, MainWindow):
@@ -142,6 +143,9 @@ class Ui_MainWindow(QMainWindow):
     #     ave = round(total_word/total_time*60)
     #     print(ave)
 
+    def Analy(self):
+        data = ' ' + os.getcwd() + '\\' + 'core\\Analysis\\main_Analysis.py'
+        os.system(r'python'+data)
 
     def Save(self):
         self.fname, ftype = QFileDialog.getSaveFileName(self, 'save file', './', "ALL (*.*)")
