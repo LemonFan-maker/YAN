@@ -96,14 +96,14 @@ class Ui_MainWindow(QMainWindow):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Tab 2"))
 
     def Open(self):
-        file,fileType = QFileDialog.getOpenFileName(self, 'open file', './', "all (*.*)")
-        if file:
-            with open(file, 'r', encoding='utf-8') as f:
+        self.file,fileType = QFileDialog.getOpenFileName(self, 'open file', './', "all (*.*)")
+        if self.file:
+            with open(self.file, 'r', encoding='utf-8') as f:
                 self.textBrowser.append(f.read())
 
     def View(self):
         bg=n.array(Image.open('core\Analysis\wallhaven-yj7o2l_1500x907.png')) #将图片以数组形式输出
-        file = Ui_MainWindow.textBrowser.toPlainText()
+        file = self.textBrowser.toPlainText()
         cloud = wordcloud(font_path=r'assets\WordCloud.ttf',
                         mode='RGBA',
                         mask=bg,
