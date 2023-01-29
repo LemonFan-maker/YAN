@@ -12,8 +12,12 @@ from wordcloud import WordCloud
 import tempfile, os, shutil
 from wordcloud import ImageColorGenerator
 import numpy as n
+import jieba.posseg as psg
+from matplotlib import font_manager
+import matplotlib.pyplot as plt
 from PIL import Image
-import ctypes, re
+import networkx as nx
+import ctypes, re, matplotlib
 
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("996")
 class Ui_MainWindow(QMainWindow):
@@ -65,16 +69,16 @@ class Ui_MainWindow(QMainWindow):
         self.gridLayout.addWidget(self.pushButton_Clear, 3, 0, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 1, 0, 1, 1)
         self.tabWidget.addTab(self.WordCloud, "")
-        self.Relative = QtWidgets.QWidget()
-        self.Relative.setObjectName("Relative")
-        self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.Relative)
+        self.Relation = QtWidgets.QWidget()
+        self.Relation.setObjectName("Relation")
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.Relation)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        self.label_3 = QtWidgets.QLabel(self.Relative)
+        self.label_3 = QtWidgets.QLabel(self.Relation)
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_4.addWidget(self.label_3)
-        self.lineEdit_Relative = QtWidgets.QLineEdit(self.Relative)
+        self.lineEdit_Relative = QtWidgets.QLineEdit(self.Relation)
         self.lineEdit_Relative.setObjectName("lineEdit_Relative")
         self.horizontalLayout_4.addWidget(self.lineEdit_Relative)
         self.verticalLayout_5.addLayout(self.horizontalLayout_4)
@@ -82,30 +86,27 @@ class Ui_MainWindow(QMainWindow):
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         self.verticalLayout_7 = QtWidgets.QVBoxLayout()
         self.verticalLayout_7.setObjectName("verticalLayout_7")
-        self.pushButton_Relative_Open = QtWidgets.QPushButton(self.Relative)
-        self.pushButton_Relative_Open.setObjectName("pushButton_Relative_Open")
-        self.verticalLayout_7.addWidget(self.pushButton_Relative_Open)
-        self.pushButton_Relative_Create = QtWidgets.QPushButton(self.Relative)
-        self.pushButton_Relative_Create.setObjectName("pushButton_Relative_Create")
-        self.verticalLayout_7.addWidget(self.pushButton_Relative_Create)
-        self.pushButton_Relative_View = QtWidgets.QPushButton(self.Relative)
-        self.pushButton_Relative_View.setObjectName("pushButton_Relative_View")
-        self.verticalLayout_7.addWidget(self.pushButton_Relative_View)
-        self.pushButton_Relative_Clear = QtWidgets.QPushButton(self.Relative)
-        self.pushButton_Relative_Clear.setObjectName("pushButton_Relative_Clear")
-        self.verticalLayout_7.addWidget(self.pushButton_Relative_Clear)
-        self.pushButton_Relative_Save = QtWidgets.QPushButton(self.Relative)
-        self.pushButton_Relative_Save.setObjectName("pushButton_Relative_Save")
-        self.verticalLayout_7.addWidget(self.pushButton_Relative_Save)
-        self.pushButton_Relative_Exit = QtWidgets.QPushButton(self.Relative)
-        self.pushButton_Relative_Exit.setObjectName("pushButton_Relative_Exit")
-        self.verticalLayout_7.addWidget(self.pushButton_Relative_Exit)
+        self.pushButton_Relation_Open = QtWidgets.QPushButton(self.Relation)
+        self.pushButton_Relation_Open.setObjectName("pushButton_Relation_Open")
+        self.verticalLayout_7.addWidget(self.pushButton_Relation_Open)
+        self.pushButton_Relation_View = QtWidgets.QPushButton(self.Relation)
+        self.pushButton_Relation_View.setObjectName("pushButton_Relation_View")
+        self.verticalLayout_7.addWidget(self.pushButton_Relation_View)
+        self.pushButton_Relation_Clear = QtWidgets.QPushButton(self.Relation)
+        self.pushButton_Relation_Clear.setObjectName("pushButton_Relation_Clear")
+        self.verticalLayout_7.addWidget(self.pushButton_Relation_Clear)
+        self.pushButton_Relation_Save = QtWidgets.QPushButton(self.Relation)
+        self.pushButton_Relation_Save.setObjectName("pushButton_Relation_Save")
+        self.verticalLayout_7.addWidget(self.pushButton_Relation_Save)
+        self.pushButton_Relation_Exit = QtWidgets.QPushButton(self.Relation)
+        self.pushButton_Relation_Exit.setObjectName("pushButton_Relation_Exit")
+        self.verticalLayout_7.addWidget(self.pushButton_Relation_Exit)
         self.horizontalLayout_6.addLayout(self.verticalLayout_7)
-        self.graphicsView_Relative = QtWidgets.QGraphicsView(self.Relative)
-        self.graphicsView_Relative.setObjectName("graphicsView_Relative")
-        self.horizontalLayout_6.addWidget(self.graphicsView_Relative)
+        self.textBrowser_Relation = QtWidgets.QTextBrowser(self.Relation)
+        self.textBrowser_Relation.setObjectName("textBrowser_Relation")
+        self.horizontalLayout_6.addWidget(self.textBrowser_Relation)
         self.verticalLayout_5.addLayout(self.horizontalLayout_6)
-        self.tabWidget.addTab(self.Relative, "")
+        self.tabWidget.addTab(self.Relation, "")
         self.Money = QtWidgets.QWidget()
         self.Money.setObjectName("Money")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.Money)
@@ -176,6 +177,11 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_View.clicked.connect(self.View)
         self.pushButton_Save.clicked.connect(self.Save)
         self.pushButton_Calc.clicked.connect(self.Calc)
+        self.pushButton_Relation_Clear.clicked.connect(self.Relation_Clear)
+        self.pushButton_Relation_Open.clicked.connect(self.Relation_Open)
+        self.pushButton_Relation_View.clicked.connect(self.Relation_View)
+        self.pushButton_Relation_Save.clicked.connect(self.Relation_Save)
+        self.pushButton_Relation_Exit.clicked.connect(QCoreApplication.instance().quit)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -186,14 +192,13 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_View.setText(_translate("MainWindow", "预览云图"))
         self.pushButton_Clear.setText(_translate("MainWindow", "清空"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.WordCloud), _translate("MainWindow", "词云"))
-        self.label_3.setText(_translate("MainWindow", "核心人物(用英语“;”分割)"))
-        self.pushButton_Relative_Open.setText(_translate("MainWindow", "打开文件"))
-        self.pushButton_Relative_Create.setText(_translate("MainWindow", "制作关系图"))
-        self.pushButton_Relative_View.setText(_translate("MainWindow", "预览结果"))
-        self.pushButton_Relative_Clear.setText(_translate("MainWindow", "清除输入"))
-        self.pushButton_Relative_Save.setText(_translate("MainWindow", "保存本地"))
-        self.pushButton_Relative_Exit.setText(_translate("MainWindow", "退出"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.Relative), _translate("MainWindow", "人物分析"))
+        self.label_3.setText(_translate("MainWindow", "核心人物(用英语“,”分割)"))
+        self.pushButton_Relation_Open.setText(_translate("MainWindow", "打开文件"))
+        self.pushButton_Relation_View.setText(_translate("MainWindow", "预览结果"))
+        self.pushButton_Relation_Clear.setText(_translate("MainWindow", "清除输入"))
+        self.pushButton_Relation_Save.setText(_translate("MainWindow", "保存本地"))
+        self.pushButton_Relation_Exit.setText(_translate("MainWindow", "退出"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.Relation), _translate("MainWindow", "人物分析"))
         self.label.setText(_translate("MainWindow", "起点稿费计算"))
         self.label_2.setText(_translate("MainWindow", "估计稿费"))
         self.radioButton_Full.setText(_translate("MainWindow", "是否全勤"))
@@ -207,6 +212,75 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_Calc.setText(_translate("MainWindow", "计算"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Money), _translate("MainWindow", "稿费计算"))
     
+    def Relation_Open(self):
+        self.file,fileType = QFileDialog.getOpenFileName(self, 'open file', './', "text files (*.*)")
+        if self.file:
+            with open(self.file, 'r', encoding='utf-8') as f:
+                data = f.read()
+                self.textBrowser_Relation.append(data)
+
+    def Relation_View(self):
+        data = self.lineEdit_Relative.text()
+        Names = data.split(',')
+        relations={}
+        lst_para=(self.textBrowser_Relation.toPlainText()).split('\n')
+        for text in lst_para:
+            for name_0 in Names:
+                if name_0 in text:
+                    for name_1 in Names:
+                        if name_1 in text and name_0!=name_1 and (name_1,name_0) not in relations:
+                            relations[(name_0,name_1)]=relations.get((name_0,name_1),0)+1
+        maxRela=max([v for k,v in relations.items()])
+        relations={k:v /  maxRela for k,v in relations.items()}
+        #return relations
+        plt.figure(figsize=(30,30))
+        G=nx.Graph()
+        for k,v in relations.items():
+            G.add_edge(k[0],k[1],weight=v)
+        elarge=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight']>0.6]
+        emidle=[(u,v) for (u,v,d) in G.edges(data=True) if (d['weight']>0.3) & (d['weight']<=0.6)]
+        esmall=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight']<=0.3]
+        pos=nx.spring_layout(G)
+        nx.draw_networkx_nodes(G,pos,alpha=0.8, node_size=1200)
+        nx.draw_networkx_edges(G,pos,edgelist=elarge, width=2.5,alpha=0.9,edge_color='g')
+        nx.draw_networkx_edges(G,pos,edgelist=emidle, width=1.5,alpha=0.6,edge_color='y')
+        nx.draw_networkx_edges(G,pos,edgelist=esmall, width=1,alpha=0.4,edge_color='b',style='dashed')
+        nx.draw_networkx_labels(G,pos,font_size=12)
+        temp = tempfile.mkdtemp()
+        self.Rela = temp + "\\Relation.png"
+        plt.axis('off')
+        font_title = font_manager.FontProperties(fname='assets\WordCloud.ttf')
+        plt.title("人物分析图",fontproperties=font_title,fontdict={'fontsize': 22})
+        plt.savefig(self.Rela, dpi=800)
+        plt.show()
+        print(self.Rela)
+        return self.Rela
+
+    def Relation_Save(self):
+        try:
+            self.Rela
+        except AttributeError:
+            self.Relation()
+        
+        dirs = self.Rela
+        file= QFileDialog.getExistingDirectory(self, 'save file', './')
+
+        if os.path.exists(file+"\\Relation.png"):
+            confirm = QMessageBox.question(self,'覆盖','发现重文件，是否覆盖?',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)
+            if confirm == QMessageBox.Yes:
+                os.remove(file+"\\Relation.png")
+                shutil.move(dirs, file)
+                QMessageBox.about(self,'提示','保存成功,在'+file+"目录下")
+            if confirm == QMessageBox.No:
+                pass
+        else:
+            shutil.move(dirs, file)
+            QMessageBox.about(self,'提示','保存成功,在'+self.file+"目录下")
+
+    def Relation_Clear(self):
+        self.lineEdit_Relative.clear()
+        self.textBrowser_Relation.clear()
+
     def Calc(self):
         Subscribe = self.lineEdit_Subscribe.text()
         Price = self.lineEdit_Price.text()
