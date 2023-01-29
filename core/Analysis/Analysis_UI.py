@@ -8,9 +8,10 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import QWidget, QFileDialog, QPushButton, QGridLayout, QApplication, QMainWindow, QFormLayout, QLineEdit
+from PyQt5.QtWidgets import QWidget, QFileDialog, QPushButton, QGridLayout, QApplication, QMainWindow, QMessageBox
 from qt_material import apply_stylesheet
 from wordcloud import WordCloud
+from pyqt5Custom import Toast
 import tempfile, os, shutil
 from wordcloud import ImageColorGenerator
 import numpy as n
@@ -99,12 +100,12 @@ class Ui_MainWindow(QMainWindow):
         self.textBrowser.clear()
 
     def Open(self):
-        self.file,fileType = QFileDialog.getOpenFileName(self, 'open file', './', "all (*.*)")
+        self.file,fileType = QFileDialog.getOpenFileName(self, 'open file', './', "text files (*.*)")
         if self.file:
             with open(self.file, 'r', encoding='utf-8') as f:
                 self.textBrowser.append(f.read())
-
-    def View(self):
+    
+    def Cloud(self):
         bg=n.array(Image.open('core\\Analysis\\assets\\I.png')) #将图片以数组形式输出
         if self.file:
             with open(self.file, 'r', encoding='utf-8') as f:
@@ -123,10 +124,29 @@ class Ui_MainWindow(QMainWindow):
                 self.pic = temp + "\\Cloud.png"
                 print(self.pic)
                 cloud.to_file(self.pic)
-                im = Image.open(self.pic)
-                im.show()
+
+    def View(self):
+        self.Cloud()
+        im = Image.open(self.pic)
+        im.show()
 
     def Save(self):
+        try:
+            self.pic
+        except AttributeError:
+            self.Cloud()
+
         dirs = self.pic
         file= QFileDialog.getExistingDirectory(self, 'save file', './')
-        shutil.move(dirs, file)
+        #shutil.copyfileobj(dirs, file, length=8*512)
+        print(file)
+        if os.path.exists(file+"\\Cloud.png"):
+            print("文件存在，忽略")
+            confirm = QMessageBox.question(self,'覆盖','发现重文件，是否覆盖?',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)
+            if confirm == QMessageBox.Yes:
+                os.remove(file+"\\Cloud.png")
+                shutil.move(dirs, file)
+            if confirm == QMessageBox.No:
+                pass
+        else:
+            shutil.move(dirs, file)
