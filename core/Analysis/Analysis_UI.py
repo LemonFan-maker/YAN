@@ -138,15 +138,18 @@ class Ui_MainWindow(QMainWindow):
 
         dirs = self.pic
         file= QFileDialog.getExistingDirectory(self, 'save file', './')
+
         #shutil.copyfileobj(dirs, file, length=8*512)
         print(file)
         if os.path.exists(file+"\\Cloud.png"):
-            print("文件存在，忽略")
             confirm = QMessageBox.question(self,'覆盖','发现重文件，是否覆盖?',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)
             if confirm == QMessageBox.Yes:
                 os.remove(file+"\\Cloud.png")
                 shutil.move(dirs, file)
+                QMessageBox.about(self,'提示','保存成功,在'+file+"目录下")
             if confirm == QMessageBox.No:
                 pass
         else:
             shutil.move(dirs, file)
+            QMessageBox.about(self,'提示','保存成功,在'+self.file+"目录下")
+        
