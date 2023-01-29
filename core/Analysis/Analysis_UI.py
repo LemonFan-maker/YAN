@@ -65,6 +65,47 @@ class Ui_MainWindow(QMainWindow):
         self.gridLayout.addWidget(self.pushButton_Clear, 3, 0, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 1, 0, 1, 1)
         self.tabWidget.addTab(self.WordCloud, "")
+        self.Relative = QtWidgets.QWidget()
+        self.Relative.setObjectName("Relative")
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.Relative)
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.label_3 = QtWidgets.QLabel(self.Relative)
+        self.label_3.setObjectName("label_3")
+        self.horizontalLayout_4.addWidget(self.label_3)
+        self.lineEdit_Relative = QtWidgets.QLineEdit(self.Relative)
+        self.lineEdit_Relative.setObjectName("lineEdit_Relative")
+        self.horizontalLayout_4.addWidget(self.lineEdit_Relative)
+        self.verticalLayout_5.addLayout(self.horizontalLayout_4)
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.verticalLayout_7 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.pushButton_Relative_Open = QtWidgets.QPushButton(self.Relative)
+        self.pushButton_Relative_Open.setObjectName("pushButton_Relative_Open")
+        self.verticalLayout_7.addWidget(self.pushButton_Relative_Open)
+        self.pushButton_Relative_Create = QtWidgets.QPushButton(self.Relative)
+        self.pushButton_Relative_Create.setObjectName("pushButton_Relative_Create")
+        self.verticalLayout_7.addWidget(self.pushButton_Relative_Create)
+        self.pushButton_Relative_View = QtWidgets.QPushButton(self.Relative)
+        self.pushButton_Relative_View.setObjectName("pushButton_Relative_View")
+        self.verticalLayout_7.addWidget(self.pushButton_Relative_View)
+        self.pushButton_Relative_Clear = QtWidgets.QPushButton(self.Relative)
+        self.pushButton_Relative_Clear.setObjectName("pushButton_Relative_Clear")
+        self.verticalLayout_7.addWidget(self.pushButton_Relative_Clear)
+        self.pushButton_Relative_Save = QtWidgets.QPushButton(self.Relative)
+        self.pushButton_Relative_Save.setObjectName("pushButton_Relative_Save")
+        self.verticalLayout_7.addWidget(self.pushButton_Relative_Save)
+        self.pushButton_Relative_Exit = QtWidgets.QPushButton(self.Relative)
+        self.pushButton_Relative_Exit.setObjectName("pushButton_Relative_Exit")
+        self.verticalLayout_7.addWidget(self.pushButton_Relative_Exit)
+        self.horizontalLayout_6.addLayout(self.verticalLayout_7)
+        self.graphicsView_Relative = QtWidgets.QGraphicsView(self.Relative)
+        self.graphicsView_Relative.setObjectName("graphicsView_Relative")
+        self.horizontalLayout_6.addWidget(self.graphicsView_Relative)
+        self.verticalLayout_5.addLayout(self.horizontalLayout_6)
+        self.tabWidget.addTab(self.Relative, "")
         self.Money = QtWidgets.QWidget()
         self.Money.setObjectName("Money")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.Money)
@@ -125,7 +166,7 @@ class Ui_MainWindow(QMainWindow):
         self.horizontalLayout_2.addLayout(self.horizontalLayout)
         MainWindow.setCentralWidget(self.centralwidget)
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         
         # 绑定事件槽
@@ -145,6 +186,14 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_View.setText(_translate("MainWindow", "预览云图"))
         self.pushButton_Clear.setText(_translate("MainWindow", "清空"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.WordCloud), _translate("MainWindow", "词云"))
+        self.label_3.setText(_translate("MainWindow", "核心人物(用英语“;”分割)"))
+        self.pushButton_Relative_Open.setText(_translate("MainWindow", "打开文件"))
+        self.pushButton_Relative_Create.setText(_translate("MainWindow", "制作关系图"))
+        self.pushButton_Relative_View.setText(_translate("MainWindow", "预览结果"))
+        self.pushButton_Relative_Clear.setText(_translate("MainWindow", "清除输入"))
+        self.pushButton_Relative_Save.setText(_translate("MainWindow", "保存本地"))
+        self.pushButton_Relative_Exit.setText(_translate("MainWindow", "退出"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.Relative), _translate("MainWindow", "人物分析"))
         self.label.setText(_translate("MainWindow", "起点稿费计算"))
         self.label_2.setText(_translate("MainWindow", "估计稿费"))
         self.radioButton_Full.setText(_translate("MainWindow", "是否全勤"))
@@ -198,7 +247,6 @@ class Ui_MainWindow(QMainWindow):
         if self.file:
             with open(self.file, 'r', encoding='utf-8') as f:
                 data = f.read()
-                prfloat(data)
                 cloud = WordCloud(font_path=r'assets\WordCloud.ttf',
                                 mode='RGBA',
                                 mask=bg,
@@ -210,7 +258,6 @@ class Ui_MainWindow(QMainWindow):
                 cloud.recolor(color_func=ig) #重新设置词云图颜色
                 temp = tempfile.mkdtemp()
                 self.pic = temp + "\\Cloud.png"
-                prfloat(self.pic)
                 cloud.to_file(self.pic)
 
     def View(self):
@@ -227,7 +274,6 @@ class Ui_MainWindow(QMainWindow):
         dirs = self.pic
         file= QFileDialog.getExistingDirectory(self, 'save file', './')
 
-        prfloat(file)
         if os.path.exists(file+"\\Cloud.png"):
             confirm = QMessageBox.question(self,'覆盖','发现重文件，是否覆盖?',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)
             if confirm == QMessageBox.Yes:
