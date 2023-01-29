@@ -13,7 +13,7 @@ import tempfile, os, shutil
 from wordcloud import ImageColorGenerator
 import numpy as n
 from PIL import Image
-import ctypes
+import ctypes, re
 
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("996")
 class Ui_MainWindow(QMainWindow):
@@ -76,40 +76,47 @@ class Ui_MainWindow(QMainWindow):
         self.verticalLayout_2.addWidget(self.label)
         self.gridLayout_3 = QtWidgets.QGridLayout()
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.Full_Addence = QtWidgets.QLabel(self.Money)
-        self.Full_Addence.setObjectName("Full_Addence")
-        self.gridLayout_3.addWidget(self.Full_Addence, 0, 0, 1, 1)
+        self.label_2 = QtWidgets.QLabel(self.Money)
+        self.label_2.setObjectName("label_2")
+        self.gridLayout_3.addWidget(self.label_2, 5, 0, 1, 1, QtCore.Qt.AlignHCenter)
+        self.radioButton_Full = QtWidgets.QRadioButton(self.Money)
+        self.radioButton_Full.setObjectName("radioButton_Full")
+        self.gridLayout_3.addWidget(self.radioButton_Full, 0, 2, 1, 1)
         self.Price = QtWidgets.QLabel(self.Money)
         self.Price.setObjectName("Price")
         self.gridLayout_3.addWidget(self.Price, 4, 0, 1, 1, QtCore.Qt.AlignHCenter)
-        self.lineEdit_Tax = QtWidgets.QLineEdit(self.Money)
-        self.lineEdit_Tax.setObjectName("lineEdit_Tax")
-        self.gridLayout_3.addWidget(self.lineEdit_Tax, 3, 2, 1, 1)
-        self.Words = QtWidgets.QLabel(self.Money)
-        self.Words.setObjectName("Words")
-        self.gridLayout_3.addWidget(self.Words, 1, 0, 1, 1, QtCore.Qt.AlignHCenter)
         self.Subscribe = QtWidgets.QLabel(self.Money)
         self.Subscribe.setObjectName("Subscribe")
         self.gridLayout_3.addWidget(self.Subscribe, 2, 0, 1, 1, QtCore.Qt.AlignHCenter)
-        self.radioButton = QtWidgets.QRadioButton(self.Money)
-        self.radioButton.setObjectName("radioButton")
-        self.gridLayout_3.addWidget(self.radioButton, 0, 2, 1, 1)
-        self.lineEdit_Price = QtWidgets.QLineEdit(self.Money)
-        self.lineEdit_Price.setObjectName("lineEdit_Price")
-        self.gridLayout_3.addWidget(self.lineEdit_Price, 4, 2, 1, 1)
+        self.lineEdit_Tax = QtWidgets.QLineEdit(self.Money)
+        self.lineEdit_Tax.setObjectName("lineEdit_Tax")
+        self.gridLayout_3.addWidget(self.lineEdit_Tax, 3, 2, 1, 1)
         self.Tax = QtWidgets.QLabel(self.Money)
         self.Tax.setObjectName("Tax")
         self.gridLayout_3.addWidget(self.Tax, 3, 0, 1, 1, QtCore.Qt.AlignHCenter)
         self.lineEdit_Subscribe = QtWidgets.QLineEdit(self.Money)
         self.lineEdit_Subscribe.setObjectName("lineEdit_Subscribe")
         self.gridLayout_3.addWidget(self.lineEdit_Subscribe, 2, 2, 1, 1)
+        self.Words = QtWidgets.QLabel(self.Money)
+        self.Words.setObjectName("Words")
+        self.gridLayout_3.addWidget(self.Words, 1, 0, 1, 1, QtCore.Qt.AlignHCenter)
+        self.Full_Addence = QtWidgets.QLabel(self.Money)
+        self.Full_Addence.setObjectName("Full_Addence")
+        self.gridLayout_3.addWidget(self.Full_Addence, 0, 0, 1, 1)
+        self.lineEdit_Price = QtWidgets.QLineEdit(self.Money)
+        self.lineEdit_Price.setObjectName("lineEdit_Price")
+        self.gridLayout_3.addWidget(self.lineEdit_Price, 4, 2, 1, 1)
         self.lineEdit_Words = QtWidgets.QLineEdit(self.Money)
         self.lineEdit_Words.setObjectName("lineEdit_Words")
         self.gridLayout_3.addWidget(self.lineEdit_Words, 1, 2, 1, 1)
+        self.label_Total = QtWidgets.QLabel(self.Money)
+        self.label_Total.setText("")
+        self.label_Total.setObjectName("label_Total")
+        self.gridLayout_3.addWidget(self.label_Total, 5, 2, 1, 1, QtCore.Qt.AlignHCenter)
         self.verticalLayout_2.addLayout(self.gridLayout_3)
-        self.pushButton = QtWidgets.QPushButton(self.Money)
-        self.pushButton.setObjectName("pushButton")
-        self.verticalLayout_2.addWidget(self.pushButton)
+        self.pushButton_Calc = QtWidgets.QPushButton(self.Money)
+        self.pushButton_Calc.setObjectName("pushButton_Calc")
+        self.verticalLayout_2.addWidget(self.pushButton_Calc)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem)
         self.horizontalLayout_3.addLayout(self.verticalLayout_2)
@@ -127,6 +134,7 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_Clear.clicked.connect(self.Clear)
         self.pushButton_View.clicked.connect(self.View)
         self.pushButton_Save.clicked.connect(self.Save)
+        self.pushButton_Calc.clicked.connect(self.Calc)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -138,17 +146,43 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_Clear.setText(_translate("MainWindow", "清空"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.WordCloud), _translate("MainWindow", "词云"))
         self.label.setText(_translate("MainWindow", "起点稿费计算"))
-        self.Full_Addence.setText(_translate("MainWindow", "全勤(日更4000)"))
+        self.label_2.setText(_translate("MainWindow", "估计稿费"))
+        self.radioButton_Full.setText(_translate("MainWindow", "是否全勤"))
         self.Price.setText(_translate("MainWindow", "千字价格"))
-        self.lineEdit_Tax.setText(_translate("MainWindow", "0.888"))
-        self.Words.setText(_translate("MainWindow", "字数"))
         self.Subscribe.setText(_translate("MainWindow", "均订"))
-        self.radioButton.setText(_translate("MainWindow", "是否全勤"))
-        self.lineEdit_Price.setText(_translate("MainWindow", "2.325"))
+        self.lineEdit_Tax.setText(_translate("MainWindow", "0.888"))
         self.Tax.setText(_translate("MainWindow", "税率"))
-        self.pushButton.setText(_translate("MainWindow", "计算"))
+        self.Words.setText(_translate("MainWindow", "字数"))
+        self.Full_Addence.setText(_translate("MainWindow", "全勤(日更4000)"))
+        self.lineEdit_Price.setText(_translate("MainWindow", "2.325"))
+        self.pushButton_Calc.setText(_translate("MainWindow", "计算"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.Money), _translate("MainWindow", "稿费计算"))
     
+    def Calc(self):
+        Subscribe = self.lineEdit_Subscribe.text()
+        Price = self.lineEdit_Price.text()
+        Tax = self.lineEdit_Tax.text()
+        Words = self.lineEdit_Words.text()
+        if re.match('\d+(\.\d+)?', Subscribe) and re.match('\d+(\.\d+)?', Price) and re.match('\d+(\.\d+)?', Tax) and re.match('\d+(\.\d+)?', Words):
+            pass
+        else:
+            QMessageBox.warning(self,'警告','仅支持输入正整数和正小数')
+        
+        if self.radioButton_Full.isChecked() == True:
+            Total = (((((float(Words)*30)/1000)*float(Subscribe)*2.325)/100)*float(Tax))+800+600
+        else:
+            Total = (((((float(Words)*30)/1000)*float(Subscribe)*2.325)/100)*float(Tax))+800
+        
+        if Total > 800 and self.radioButton_Full.isChecked() == True:
+            Total = ((((((float(Words)*30)/1000)*float(Subscribe)*2.325)/100)-800)*float(Tax))+800+600
+        
+        if Total > 800 and self.radioButton_Full.isChecked() == False:
+            Total = ((((((float(Words)*30)/1000)*float(Subscribe)*2.325)/100)-800)*float(Tax))+800
+        
+        if Total >0:
+            self.label_Total.setText(str(round(Total, 2)))
+        if Total < 0:
+            self.label_Total.setText('加油哦，稿费似乎不够')
 
     def Clear(self):
         self.textBrowser.clear()
@@ -164,7 +198,7 @@ class Ui_MainWindow(QMainWindow):
         if self.file:
             with open(self.file, 'r', encoding='utf-8') as f:
                 data = f.read()
-                print(data)
+                prfloat(data)
                 cloud = WordCloud(font_path=r'assets\WordCloud.ttf',
                                 mode='RGBA',
                                 mask=bg,
@@ -176,7 +210,7 @@ class Ui_MainWindow(QMainWindow):
                 cloud.recolor(color_func=ig) #重新设置词云图颜色
                 temp = tempfile.mkdtemp()
                 self.pic = temp + "\\Cloud.png"
-                print(self.pic)
+                prfloat(self.pic)
                 cloud.to_file(self.pic)
 
     def View(self):
@@ -193,7 +227,7 @@ class Ui_MainWindow(QMainWindow):
         dirs = self.pic
         file= QFileDialog.getExistingDirectory(self, 'save file', './')
 
-        print(file)
+        prfloat(file)
         if os.path.exists(file+"\\Cloud.png"):
             confirm = QMessageBox.question(self,'覆盖','发现重文件，是否覆盖?',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)
             if confirm == QMessageBox.Yes:
