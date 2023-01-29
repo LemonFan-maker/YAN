@@ -107,6 +107,7 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_save.clicked.connect(self.Save)
         self.pushButton_Analy.clicked.connect(self.Analy)
         self.pushButton_markdown.clicked.connect(self.MD)
+        self.pushButton_settings.clicked.connect(self.Settings)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -142,6 +143,10 @@ class Ui_MainWindow(QMainWindow):
     #     total_word = len(self.textEdit.toPlainText())
     #     ave = round(total_word/total_time*60)
     #     print(ave)
+
+    def Settings(self):
+        data = ' ' + os.getcwd() + '\\' + 'settings\\main_Settings.py'
+        os.system(r'python'+data)
 
     def Analy(self):
         data = ' ' + os.getcwd() + '\\' + 'core\\Analysis\\main_Analysis.py'
@@ -188,19 +193,16 @@ if __name__ == "__main__":
     splash = MySplashScreen()
     pixmap = QtGui.QPixmap('./assets/loading.png')
     splash.show()
-    font = QtGui.QFont('Microsoft JhengHei',18)
+    font = QtGui.QFont('assets\\WordCloud.ttf',18)
     pixmap = pixmap.scaledToWidth(800)
     splash.setPixmap(pixmap)
     splash.showMessage("欢迎!", QtCore.Qt.AlignHCenter | QtCore.Qt.AlignBottom, QtCore.Qt.white)
     splash.setFont(font)
     time.sleep(3)
-
     MainWindow = QtWidgets.QMainWindow()
     apply_stylesheet(app ,theme='dark_cyan.xml')
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
-    
     splash.finish(ui)
-    
     MainWindow.show()
     sys.exit(app.exec_())
