@@ -12,7 +12,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QCoreApplication, QSettings
 from PyQt5.QtWidgets import QWidget, QFileDialog, QPushButton, QGridLayout, QApplication, QMainWindow, QMessageBox
 from PIL import Image
+import  ctypes
 
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("996")
 class Ui_Setting(QMainWindow):
     def __init__(self):
         super().__init__()

@@ -9,7 +9,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication,QSpinBox
 import json, urllib.parse, os, tempfile, random
 from qt_material import apply_stylesheet
+import  ctypes
 
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("996")
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
