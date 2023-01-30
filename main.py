@@ -166,7 +166,7 @@ class Ui_MainWindow(QMainWindow):
                     os.remove(self.fname)
                     with open(self.fname, 'w',encoding='utf-8') as f:
                         f.write()
-                        f.close
+                        f.close()
                     QMessageBox.about(self,'提示',self.fname+'保存成功')
 
             else:    
