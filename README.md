@@ -29,3 +29,6 @@ $${\huge \mathbb{Stage I}}$$
 $${\huge \mathbb{Stage II}}$$
 
 - [ ] ~~$\LaTeX$编辑器~~(暂无好的替代方案)
+
+- [ ] PyQt 多进程
+  
