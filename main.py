@@ -1,8 +1,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QSettings 
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QApplication, QMainWindow, QSplashScreen
 from qt_material import apply_stylesheet
 from pyqt5Custom.toast import Toast
 import sys, os, time, ctypes
+
+
+
+settings = QSettings("core\\Settings\\config\\config.ini", QSettings.IniFormat)
 
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("996")
 class Ui_MainWindow(QMainWindow):
@@ -175,7 +180,7 @@ class Ui_MainWindow(QMainWindow):
                 self.textEdit.append(data)
                 
     def Settings(self):
-        data = ' ' + os.getcwd() + '\\' + 'settings\\main_Settings.py'
+        data = ' ' + os.getcwd() + '\\' + 'core\\Settings\\main_Settings.py'
         os.system(r'python'+data)
 
     def Analy(self):
@@ -210,7 +215,7 @@ if __name__ == "__main__":
     splash.setFont(font)
     time.sleep(3)
     MainWindow = QtWidgets.QMainWindow()
-    apply_stylesheet(app ,theme='dark_cyan.xml')
+    apply_stylesheet(app ,theme=settings.value("Global/Theme"))
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     splash.finish(ui)

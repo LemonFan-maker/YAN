@@ -1,12 +1,12 @@
 import sys, os
 from PyQt5 import QtGui
-from PyQt5.QtCore import QStringListModel, QUrl, QJsonValue, pyqtSlot
+from PyQt5.QtCore import QStringListModel, QUrl, QJsonValue, QSettings
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDesktopWidget, QInputDialog
 from PyQt5.QtWebChannel import QWebChannel
 from qt_material import apply_stylesheet
-
 from MD_UI import Ui_MainWindow
 
+settings =QSettings("core\\Settings\\config\\config.ini", QSettings.IniFormat)
 class AppMainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super(AppMainWindow, self).__init__(parent)
@@ -37,6 +37,6 @@ class AppMainWindow(QMainWindow, Ui_MainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     appMainWin = AppMainWindow()
-    apply_stylesheet(app, theme="dark_cyan.xml")
+    apply_stylesheet(app, theme=settings.value("Global/Theme"))
     appMainWin.show()
     sys.exit(app.exec_())
