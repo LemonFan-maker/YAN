@@ -10,7 +10,7 @@ $${\huge \mathbb{Stage I}}$$
 
 - [x] ~~MD编辑器~~(已移除)
 
-- [x] CodeX编辑器
+- [x] ~~CodeX编辑器~~(已移除)
 
 - [x] 文件保存
 
