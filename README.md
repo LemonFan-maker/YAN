@@ -8,7 +8,7 @@ $${\huge \mathbb{Stage I}}$$
 
 - [x] 随机人名(胡编)
 
-- [x] MD编辑器
+- [x] ~~MD编辑器~~(已移除)
 
 - [x] CodeX编辑器
 
