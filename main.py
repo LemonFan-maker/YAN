@@ -147,14 +147,6 @@ class Ui_MainWindow(QMainWindow):
     #     ave = round(total_word/total_time*60)
     #     print(ave)
 
-    def Settings(self):
-        data = ' ' + os.getcwd() + '\\' + 'settings\\main_Settings.py'
-        os.system(r'python'+data)
-
-    def Analy(self):
-        data = ' ' + os.getcwd() + '\\' + 'core\\Analysis\\main_Analysis.py'
-        os.system(r'python'+data)
-
     def Save(self):
         self.fname, ftype = QFileDialog.getSaveFileName(self, 'save file', './', "ALL (*.*)")
         print(self.fname)
@@ -181,6 +173,14 @@ class Ui_MainWindow(QMainWindow):
             with open(self.file, 'r', encoding='utf-8') as f:
                 data = f.read()
                 self.textEdit.append(data)
+                
+    def Settings(self):
+        data = ' ' + os.getcwd() + '\\' + 'settings\\main_Settings.py'
+        os.system(r'python'+data)
+
+    def Analy(self):
+        data = ' ' + os.getcwd() + '\\' + 'core\\Analysis\\main_Analysis.py'
+        os.system(r'python'+data)
 
     def CodeX(self):
         data = ' ' + os.getcwd() + '\\' + 'core\\CodeX\\main_codeX.py'
