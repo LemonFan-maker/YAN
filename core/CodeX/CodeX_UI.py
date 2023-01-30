@@ -60,15 +60,15 @@ class Ui_mainWindow(object):
         self.widget_2.setObjectName("widget_2")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.widget_2)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.btnSetting = QtWidgets.QPushButton(self.widget_2)
-        self.btnSetting.setObjectName("btnSetting")
-        self.verticalLayout.addWidget(self.btnSetting)
-        self.btnSyncToCloud = QtWidgets.QPushButton(self.widget_2)
-        self.btnSyncToCloud.setObjectName("btnSyncToCloud")
-        self.verticalLayout.addWidget(self.btnSyncToCloud)
-        self.btnSyncToLocal = QtWidgets.QPushButton(self.widget_2)
-        self.btnSyncToLocal.setObjectName("btnSyncToLocal")
-        self.verticalLayout.addWidget(self.btnSyncToLocal)
+        self.pushButton_Open = QtWidgets.QPushButton(self.widget_2)
+        self.pushButton_Open.setObjectName("pushButton_Open")
+        self.verticalLayout.addWidget(self.pushButton_Open)
+        self.pushButton_Save = QtWidgets.QPushButton(self.widget_2)
+        self.pushButton_Save.setObjectName("bpushButton_Save")
+        self.verticalLayout.addWidget(self.pushButton_Save)
+        self.pushButton_Exit = QtWidgets.QPushButton(self.widget_2)
+        self.pushButton_Exit.setObjectName("pushButton_Exit")
+        self.verticalLayout.addWidget(self.pushButton_Exit)
         self.verticalLayout_2.addWidget(self.widget_2)
         self.horizontalLayout_3.addWidget(self.widget_3)
         self.gridLayout.addWidget(self.widget_6, 0, 0, 1, 1)
@@ -83,14 +83,18 @@ class Ui_mainWindow(object):
         spacerItem = QtWidgets.QSpacerItem(5, 765, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 0, 1, 1, 1)
         mainWindow.setCentralWidget(self.centralwidget)
-
         self.retranslateUi(mainWindow)
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
+
+        #self.pushButton_Save.clicked.connect(self.Save)
+        #self.pushButton_Open.clicked.connect(self.Open)
+        #self.pushButton_Exit.clicked.connect()
+
 
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
         mainWindow.setWindowTitle(_translate("mainWindow", "CodeX"))
-        self.btnSetting.setText(_translate("mainWindow", "打开文件"))
-        self.btnSyncToCloud.setText(_translate("mainWindow", "保存文件"))
-        self.btnSyncToLocal.setText(_translate("mainWindow", "退出"))
+        self.pushButton_Open.setText(_translate("mainWindow", "打开文件"))
+        self.pushButton_Save.setText(_translate("mainWindow", "保存文件"))
+        self.pushButton_Exit.setText(_translate("mainWindow", "退出"))
 from PyQt5 import QtWebEngineWidgets
