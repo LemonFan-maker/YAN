@@ -1,11 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QSettings 
+from PyQt5.QtCore import QSettings,QCoreApplication
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QApplication, QMainWindow, QSplashScreen
 from qt_material import apply_stylesheet
 from pyqt5Custom.toast import Toast
-import sys, os, time, ctypes
-
-
+import sys, os, time, ctypes, logging
 
 settings = QSettings("core\\Settings\\config\\config.ini", QSettings.IniFormat)
 
@@ -54,9 +52,6 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_Analy = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.pushButton_Analy.setObjectName("pushButton_Analy")
         self.verticalLayout.addWidget(self.pushButton_Analy)
-        self.pushButton_VSCode = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        self.pushButton_VSCode.setObjectName("pushButton_VSCode")
-        self.verticalLayout.addWidget(self.pushButton_VSCode)
         self.pushButton_settings = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.pushButton_settings.setObjectName("pushButton_settings")
         self.verticalLayout.addWidget(self.pushButton_settings)
@@ -113,11 +108,11 @@ class Ui_MainWindow(QMainWindow):
 
         # 绑定事件槽
         self.pushButton_open.clicked.connect(self.Open)
-        self.pushButton_VSCode.clicked.connect(self.CodeX)
         self.pushButton_random.clicked.connect(self.RandomName)
         self.pushButton_save.clicked.connect(self.Save)
         self.pushButton_Analy.clicked.connect(self.Analy)
         self.pushButton_settings.clicked.connect(self.Settings)
+        self.pushButton_Exit.clicked.connect(QCoreApplication.instance().quit)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -127,7 +122,6 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_save.setText(_translate("MainWindow", "保存项目"))
         self.pushButton_random.setText(_translate("MainWindow", "随机生成"))
         self.pushButton_Analy.setText(_translate("MainWindow", "统计信息"))
-        self.pushButton_VSCode.setText(_translate("MainWindow", "代码编辑器"))
         self.pushButton_settings.setText(_translate("MainWindow", "设置"))
         self.pushButton_NY.setText(_translate("MainWindow", "关于 无·言"))
         self.pushButton_QT.setText(_translate("MainWindow", "关于Qt5"))
@@ -140,16 +134,6 @@ class Ui_MainWindow(QMainWindow):
 "</style></head><body style=\" font-family:\'新宋体\',\'华文细黑\',\'华文细黑\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'新宋体\'; font-size:18pt;\"><br /></p></body></html>"))
         self.label.setText(_translate("MainWindow", "字数"))
-    # def get_time(self):
-    #     if self.start_time == 0 and len(self.textEdit.toPlainText()) == 1:
-    #         self.start_time = time.time()
-    #         print("开始咯")
-
-    # def total(self):
-    #     total_time = round(time.time() - self.start_time)
-    #     total_word = len(self.textEdit.toPlainText())
-    #     ave = round(total_word/total_time*60)
-    #     print(ave)
 
     def Save(self):
         self.fname, ftype = QFileDialog.getSaveFileName(self, 'save file', './', "ALL (*.*)")
@@ -193,6 +177,7 @@ class Ui_MainWindow(QMainWindow):
     def RandomName(self):
         data = ' ' + os.getcwd() + '\\' + 'core\\RandomName\\main_RandomName.py'
         os.system(r'python'+data)
+        
 class MySplashScreen(QSplashScreen):
     pass
 
