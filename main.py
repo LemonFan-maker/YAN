@@ -25,8 +25,7 @@ class Ui_MainWindow(QMainWindow):
         MainWindow.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         icon = QtGui.QIcon.fromTheme("accessories-calculator")
         MainWindow.setWindowIcon(icon)
-        MainWindow.setWindowIcon(QtGui.QIcon("./assets/logo.png"))
-        MainWindow.setWindowOpacity(0.90)
+        MainWindow.setWindowOpacity(0.95)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
@@ -52,12 +51,9 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_random = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.pushButton_random.setObjectName("pushButton_random")
         self.verticalLayout.addWidget(self.pushButton_random)
-        self.pushButton_markdown = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.pushButton_Analy = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.pushButton_Analy.setObjectName("pushButton_Analy")
         self.verticalLayout.addWidget(self.pushButton_Analy)
-        self.pushButton_markdown.setObjectName("pushButton_markdown")
-        self.verticalLayout.addWidget(self.pushButton_markdown)
         self.pushButton_VSCode = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.pushButton_VSCode.setObjectName("pushButton_VSCode")
         self.verticalLayout.addWidget(self.pushButton_VSCode)
@@ -76,6 +72,9 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_Update = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         self.pushButton_Update.setObjectName("pushButton_Update")
         self.verticalLayout.addWidget(self.pushButton_Update)
+        self.pushButton_Exit = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
+        self.pushButton_Exit.setObjectName("pushButton_Exit")
+        self.verticalLayout.addWidget(self.pushButton_Exit)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.horizontalLayout.addWidget(self.scrollArea, 0, QtCore.Qt.AlignLeft)
         self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
@@ -110,14 +109,14 @@ class Ui_MainWindow(QMainWindow):
         self.statusBar.setObjectName("statusBar")
         MainWindow.setStatusBar(self.statusBar)
         self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)        
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
         # 绑定事件槽
         self.pushButton_open.clicked.connect(self.Open)
         self.pushButton_VSCode.clicked.connect(self.CodeX)
         self.pushButton_random.clicked.connect(self.RandomName)
         self.pushButton_save.clicked.connect(self.Save)
         self.pushButton_Analy.clicked.connect(self.Analy)
-        self.pushButton_markdown.clicked.connect(self.MD)
         self.pushButton_settings.clicked.connect(self.Settings)
 
     def retranslateUi(self, MainWindow):
@@ -128,13 +127,13 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_save.setText(_translate("MainWindow", "保存项目"))
         self.pushButton_random.setText(_translate("MainWindow", "随机生成"))
         self.pushButton_Analy.setText(_translate("MainWindow", "统计信息"))
-        self.pushButton_markdown.setText(_translate("MainWindow", "MD编辑器"))
         self.pushButton_VSCode.setText(_translate("MainWindow", "代码编辑器"))
         self.pushButton_settings.setText(_translate("MainWindow", "设置"))
         self.pushButton_NY.setText(_translate("MainWindow", "关于 无·言"))
         self.pushButton_QT.setText(_translate("MainWindow", "关于Qt5"))
         self.pushButton_Issue.setText(_translate("MainWindow", "报告错误"))
         self.pushButton_Update.setText(_translate("MainWindow", "检查新版本"))
+        self.pushButton_Exit.setText(_translate("MainWindow", "退出"))
         self.textEdit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -190,11 +189,7 @@ class Ui_MainWindow(QMainWindow):
     def CodeX(self):
         data = ' ' + os.getcwd() + '\\' + 'core\\CodeX\\main_codeX.py'
         os.system(r'python'+data)  
-    
-    def MD(self):
-        data = ' ' + os.getcwd() + '\\' + 'core\\MD\\main_markdown.py'
-        os.system(r'python'+data)
-    
+        
     def RandomName(self):
         data = ' ' + os.getcwd() + '\\' + 'core\\RandomName\\main_RandomName.py'
         os.system(r'python'+data)
