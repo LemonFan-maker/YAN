@@ -4,7 +4,7 @@
 
 ##### TODO List
 
-$$\mathbb{Stage I}$$
+$${\huge \mathbb{Stage I}}$$
 
 - [x] 随机人名(胡编)
 
