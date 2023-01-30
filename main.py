@@ -86,9 +86,16 @@ class Ui_MainWindow(QMainWindow):
         self.horizontalLayout.addWidget(self.textEdit)
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
-        self.tableView = QtWidgets.QTableView(self.centralwidget)
-        self.tableView.setObjectName("tableView")
-        self.gridLayout.addWidget(self.tableView, 1, 1, 1, 1, QtCore.Qt.AlignLeft|QtCore.Qt.AlignBottom)
+        self.gridLayout_2 = QtWidgets.QGridLayout()
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setObjectName("label")
+        self.gridLayout_2.addWidget(self.label, 1, 0, 1, 1)
+        self.label_Words = QtWidgets.QLabel(self.centralwidget)
+        self.label_Words.setText("")
+        self.label_Words.setObjectName("label_Words")
+        self.gridLayout_2.addWidget(self.label_Words, 1, 1, 1, 1)
+        self.gridLayout.addLayout(self.gridLayout_2, 1, 1, 1, 1)
         self.listView = QtWidgets.QListView(self.centralwidget)
         self.listView.setObjectName("listView")
         self.gridLayout.addWidget(self.listView, 0, 1, 1, 1, QtCore.Qt.AlignRight)
@@ -98,8 +105,7 @@ class Ui_MainWindow(QMainWindow):
         self.statusBar.setObjectName("statusBar")
         MainWindow.setStatusBar(self.statusBar)
         self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)        
         # 绑定事件槽
         self.pushButton_open.clicked.connect(self.Open)
         self.pushButton_VSCode.clicked.connect(self.CodeX)
@@ -125,14 +131,11 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton_Issue.setText(_translate("MainWindow", "报告错误"))
         self.pushButton_Update.setText(_translate("MainWindow", "检查新版本"))
         self.textEdit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:\'新宋体\'; font-size:18pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:18pt;\"><br /></p></body></html>"))
-
+"</style></head><body style=\" font-family:\'新宋体\',\'华文细黑\',\'华文细黑\'; font-size:16pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'新宋体\'; font-size:18pt;\"><br /></p></body></html>"))
+        self.label.setText(_translate("MainWindow", "字数"))
     # def get_time(self):
     #     if self.start_time == 0 and len(self.textEdit.toPlainText()) == 1:
     #         self.start_time = time.time()
@@ -158,12 +161,19 @@ class Ui_MainWindow(QMainWindow):
         if self.fname:
             data = self.textEdit.toPlainText()
             if os.path.exists(self.fname):
-                pass
-                #Toast(self, text="文件已存在")
+                confirm = QMessageBox.question(self,'覆盖','发现重文件，是否覆盖?',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)
+                if confirm == QMessageBox.Yes:
+                    os.remove(self.fname)
+                    with open(self.fname, 'w',encoding='utf-8') as f:
+                        f.write()
+                        f.close
+                    QMessageBox.about(self,'提示',self.fname+'保存成功')
+
             else:    
                 with open(self.fname, 'w', encoding="utf-8") as fn:
                     fn.write(data)
                     fn.close()
+                QMessageBox.about(self,'提示',self.fname+'保存成功')
 
     def Open(self):
         self.file,fileType = QFileDialog.getOpenFileName(self, 'open file', './', "ALL (*.*)")
