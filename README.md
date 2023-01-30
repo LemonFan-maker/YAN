@@ -28,6 +28,10 @@ $${\huge \mathbb{Stage I}}$$
 
 $${\huge \mathbb{Stage II}}$$
 
+- [ ] (*Stage I 遗留*)打字速度统计
+
 - [ ] ~~$\LaTeX$编辑器~~(暂无好的替代方案)
 
-- [ ] ~~PyQt 多进程~~
+- [ ] PyQt 多进程
+
+- [ ] 记录日志
