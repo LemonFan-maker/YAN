@@ -1,9 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QSettings,QCoreApplication
+from PyQt5.QtCore import QSettings, QCoreApplication, QTimer, QDateTime
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QApplication, QMainWindow, QSplashScreen
 from qt_material import apply_stylesheet
-from pyqt5Custom.toast import Toast
-import sys, os, time, ctypes, logging
+import sys, os, time, ctypes, multiprocessing
 
 settings = QSettings("core\\Settings\\config\\config.ini", QSettings.IniFormat)
 
@@ -177,14 +176,14 @@ class Ui_MainWindow(QMainWindow):
     def RandomName(self):
         data = ' ' + os.getcwd() + '\\' + 'core\\RandomName\\main_RandomName.py'
         os.system(r'python'+data)
-        
+
+
 class MySplashScreen(QSplashScreen):
     pass
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    
     splash = MySplashScreen()
     pixmap = QtGui.QPixmap('./assets/loading.png')
     splash.show()
